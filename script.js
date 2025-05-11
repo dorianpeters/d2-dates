@@ -1,6 +1,6 @@
 // Initialize flatpickr
 const fp = flatpickr("#dateInput", {
-  dateFormat: "m-d-Y", // Output format
+  dateFormat: "l-F-d-Y", // Output format
   defaultDate: new Date(),
 
   // Callback on date select
@@ -87,10 +87,10 @@ function isCourtDay(date) {
   return day !== 0 && day !== 6 && !holidaySet.has(iso);
 }
 
-// Adjust to next valid court day
-function adjustForwardToCourtDay(date) {
+// Adjust to previous valid court day
+function adjustBackwardToCourtDay(date) {
   while (!isCourtDay(date)) {
-    date.setDate(date.getDate() + 1);
+    date.setDate(date.getDate() - 1);
   }
   return date;
 }
@@ -108,7 +108,7 @@ function updateDeadlines(trialDate) {
   for (const [spanId, daysBefore] of Object.entries(deadlines)) {
     const deadlineDate = new Date(trialDate);
     deadlineDate.setDate(deadlineDate.getDate() - daysBefore);
-    const adjustedDate = adjustForwardToCourtDay(deadlineDate);
+    const adjustedDate = adjustBackwardToCourtDay(deadlineDate);
 
     // Format the adjusted date as "[day], [month] [date], [year]"
     const formattedDate = adjustedDate.toLocaleDateString("en-US", {
