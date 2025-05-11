@@ -1,6 +1,6 @@
 // Initialize flatpickr
 const fp = flatpickr("#dateInput", {
-  dateFormat: "l-F-d-Y", // Output format
+  dateFormat: "l, F d, Y", // Output format
   defaultDate: new Date(),
 
   // Callback on date select
