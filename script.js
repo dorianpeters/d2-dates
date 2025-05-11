@@ -1,5 +1,3 @@
-console.log('connected');
-
 // Initialize flatpickr
 const fp = flatpickr("#dateInput", {
   dateFormat: "m-d-Y", // Output format
@@ -9,9 +7,6 @@ const fp = flatpickr("#dateInput", {
   onChange: function(selectedDates, dateStr, instance) {
     const trialDate = selectedDates[0];
     if (trialDate) {
-      console.log("Selected Date:", dateStr);
-      console.log("Date Object:", trialDate);
-
       // Calculate and display deadlines
       updateDeadlines(trialDate);
     }

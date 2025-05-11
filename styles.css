@@ -1,0 +1,67 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Header styling */
+h1 {
+  text-align: center;
+  color: #444;
+  margin-top: 20px;
+}
+
+/* Input styling */
+input[type="text"] {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Section headers */
+h3 {
+  color: #555;
+  margin: 20px auto 10px;
+  text-align: center;
+}
+
+/* Paragraph styling */
+p {
+  margin: 10px auto;
+  padding: 0 20px;
+  max-width: 800px;
+  text-align: justify;
+}
+
+/* Span styling for deadlines */
+.deadlines {
+  font-weight: bold;
+  color: #007BFF;
+}
+
+/* Add some spacing */
+.deadlines, h3 {
+  margin-bottom: 10px;
+}
+
+/* Add hover effect to input */
+input[type="text"]:hover {
+  border-color: #007BFF;
+}
+
+/* Add focus effect to input */
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
