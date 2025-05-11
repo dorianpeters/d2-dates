@@ -4,13 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="script.js" defer></script>
   <title>D2 Pretrial Orders</title>
 </head>
 
 <body>
   <h1>D2 Pretrial Orders</h1>
-  <h3>50 Days before the date set for trial:<span id="sp-fifty-days" class="deadlines"></span></h3>
+
+  <h3>Pick a trial date:</h3>
+  <input type="text" id="dateInput" placeholder="Select a date" />
+  
+  <h3>50 Days before the date set for trial: <span id="sp-fifty-days" class="deadlines"></span></h3>
   <p>Expert Witness Disclosures: Unless demanded earlier pursuant to CCP §2034.230, or pursuant
     to stipulation, disclose in writing any expert witnesses at least 50 days before the date of trial
     pursuant to CCP Section 2034.230(b). The written disclosure shall include a time estimate for
