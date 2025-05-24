@@ -1,19 +1,30 @@
 {
-  "name": "d2-dates",
+  "name": "trial-deadlines",
   "version": "0.0.1",
   "description": "Calculates pretrial deadlines",
   "main": "script.js",
+  "private": true,
+  "type": "module", 
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
+
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dorianpeters/d2-dates.git"
+    "url": "git+https://github.com/dorianpeters/trial-deadlines.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dorianpeters/d2-dates/issues"
+    "url": "https://github.com/dorianpeters/trial-deadlines/issues"
   },
-  "homepage": "https://github.com/dorianpeters/d2-dates#readme"
+  "homepage": "https://github.com/dorianpeters/trial-deadlines#readme",
+  "dependencies": {
+    "flatpickr": "^4.6.13"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
 }
