@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/dorianpeters/trial-deadlines/issues"
   },
-  "homepage": "https://github.com/dorianpeters/trial-deadlines#readme",
+  "homepage": "https://github.com/dorianpeters/trial-deadlines",
   "dependencies": {
     "flatpickr": "^4.6.13"
   },
