@@ -2,16 +2,18 @@ import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.min.css';  // Import CSS for the calendar UI
 import { holidaySet } from './holidays.js';
 
+let lastTrialDate = new Date(); // Global variable to keep track of the latest trial date
+
 // Initialize flatpickr
 const fp = flatpickr("#dateInput", {
   dateFormat: "l, F d, Y", // Output format
-  defaultDate: new Date(),
+  defaultDate: lastTrialDate,
 
   // Callback on date select
   onChange: function(selectedDates, dateStr, instance) {
     const trialDate = selectedDates[0];
     if (trialDate) {
-      // Calculate and display deadlines
+      lastTrialDate = trialDate; // update global
       updateDeadlines(trialDate);
     }
   }
@@ -32,30 +34,39 @@ function adjustBackwardToCourtDay(date) {
   return date;
 }
 
-// Calculate deadlines and update spans
+// Calculate deadlines and update container
 function updateDeadlines(trialDate) {
-  const deadlines = {
-    "sp-fifty-days": 50,
-    "sp-fortyfive-days": 45,
-    "sp-thirty-days": 30,
-    "sp-fifteen-days": 15,
-    "sp-seven-days": 7
-  };
+  // Read custom deadlines input
+  const customInput = document.getElementById("customDeadlines").value.trim();
+  let deadlines;
+  if (customInput !== "") {
+    deadlines = customInput.split(',').map(value => parseInt(value.trim())).filter(num => !isNaN(num));
+  } else {
+    deadlines = [50, 45, 30, 15, 7];
+  }
 
-  for (const [spanId, daysBefore] of Object.entries(deadlines)) {
+  // Generate HTML for each deadline
+  let html = "";
+  deadlines.forEach(diff => {
     const deadlineDate = new Date(trialDate);
-    deadlineDate.setDate(deadlineDate.getDate() - daysBefore);
+    deadlineDate.setDate(deadlineDate.getDate() - diff);
     const adjustedDate = adjustBackwardToCourtDay(deadlineDate);
 
-    // Format the adjusted date as "[day], [month] [date], [year]"
+    // Format date as "[weekday], [month] [day], [year]"
     const formattedDate = adjustedDate.toLocaleDateString("en-US", {
       weekday: "long",
       month: "long",
-      day: "2-digit",
+      day: "numeric",
       year: "numeric"
     });
 
-    // Update the span with the calculated deadline
-    document.getElementById(spanId).textContent = formattedDate;
-  }
+    html += `<h3>${diff} Days before the date set for trial: <span class="deadlines">${formattedDate}</span></h3>`;
+  });
+
+  document.getElementById("deadlinesContainer").innerHTML = html;
 }
+
+// Update deadlines when the custom button is clicked
+document.getElementById("updateCustomDeadlines").addEventListener("click", () => {
+  updateDeadlines(lastTrialDate);
+});

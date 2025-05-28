@@ -14,21 +14,14 @@
 
   <h3>Pick a trial date:</h3>
   <input type="text" id="dateInput" placeholder="Select a date" />
-  
-  <h3>50 Days before the date set for trial: <span id="sp-fifty-days" class="deadlines"></span></h3>
 
+  <!-- Container where deadlines will be displayed -->
+  <div id="deadlinesContainer"></div>
 
-  <h3>45 Days before the date set for trial: <span id="sp-fortyfive-days" class="deadlines"></span></h3>
-
-
-  <h3>30 Days before the date set for trial: <span id="sp-thirty-days" class="deadlines"></span></h3>
-
-
-  <h3>15 Days before the date set for trial: <span id="sp-fifteen-days" class="deadlines"></span></h3>
-
-
-  <h3>7 Days before the date set for trial: <span id="sp-seven-days" class="deadlines"></span></h3>
-
+  <!-- Custom deadline input -->
+  <h3>Enter custom deadline differentials (days), separated by commas</h3>
+  <input type="text" id="customDeadlines" placeholder="e.g., 50, 45, 30, 15, 7" />
+  <button id="updateCustomDeadlines">Update Deadlines</button>
 </body>
 
 </html>
