@@ -1,7 +1,7 @@
 {
-  "name": "trial-deadlines",
+  "name": "ca-court-deadlines",
   "version": "0.0.1",
-  "description": "Calculates pretrial deadlines",
+  "description": "Calculates CA court deadlines",
   "main": "script.js",
   "private": true,
   "type": "module",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dorianpeters/trial-deadlines.git"
+    "url": "git+https://github.com/dorianpeters/ca-court-deadlines.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dorianpeters/trial-deadlines/issues"
+    "url": "https://github.com/dorianpeters/ca-court-deadlines/issues"
   },
-  "homepage": "https://github.com/dorianpeters/trial-deadlines",
+  "homepage": "https://github.com/dorianpeters/ca-court-deadlines",
   "dependencies": {
     "flatpickr": "^4.6.13"
   },

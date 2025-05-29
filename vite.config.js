@@ -1,5 +1,5 @@
 export default {
-  base: '/trial-deadlines/',
+  base: '/ca-court-deadlines/',
   minify: true,
   build: {
     outDir: 'docs',
