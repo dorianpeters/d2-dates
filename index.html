@@ -5,22 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/ca-court-deadlines/favicon.ico">
-  <title>Trial Deadlines</title>
+  <title>CA Court Deadlines</title>
   <script type="module" crossorigin src="/ca-court-deadlines/index.js"></script>
   <link rel="stylesheet" crossorigin href="/ca-court-deadlines/index.css">
 </head>
 
 <body>
-  <h1>Trial Deadlines</h1>
+  <h1>CA Court Deadlines</h1>
 
-  <h3>Pick a trial date:</h3>
+  <h3>Pick a starting date:</h3>
   <input type="text" id="dateInput" placeholder="Select a date" />
+
+  <!-- Toggle switch for Court Days vs Calendar Days with labels -->
+  <div class="toggle-container" style="text-align: center; margin: 20px auto; display: flex; align-items: center; justify-content: center;">
+    <span style="margin-right: 10px;">Calendar Days</span>
+    <label class="switch">
+      <input type="checkbox" id="dayModeToggle" checked>
+      <span class="slider"></span>
+    </label>
+    <span style="margin-left: 10px;">Court Days</span>
+  </div>
 
   <!-- Container where deadlines will be displayed -->
   <div id="deadlinesContainer"></div>
 
   <!-- Custom deadline input -->
-  <h3>Enter custom deadline differentials (days), separated by commas</h3>
+  <h3>Days from date selected:</h3>
   <input type="text" id="customDeadlines" placeholder="e.g., -50, -45, -30, -15, -7, 30" />
   <button id="updateCustomDeadlines">Update Deadlines</button>
 </body>
