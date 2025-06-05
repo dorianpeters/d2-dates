@@ -45,6 +45,16 @@ function adjustForwardToCourtDay(date) {
   return date;
 }
 
+// Get the calculation mode toggle (the hidden checkbox)
+const calculationModeToggle = document.getElementById("calculationModeToggle");
+let useCourtDays = calculationModeToggle.checked; // Initial state
+
+// Add event listener to toggle calculation mode
+calculationModeToggle.addEventListener("change", () => {
+  useCourtDays = calculationModeToggle.checked;
+  updateDeadlines(lastTrialDate); // Recalculate with the new mode
+});
+
 
 // Calculate deadlines and update container
 function updateDeadlines(trialDate) {
@@ -55,34 +65,72 @@ function updateDeadlines(trialDate) {
     differentials = customInput.split(',').map(value => parseInt(value.trim())).filter(num => !isNaN(num));
   } else {
     // Default differentials: negative for before, positive for after
-    differentials = [0]; // Updated default differentials
+    // Include 0 for the start date itself, adjusted if needed
+    differentials = [-45, -30, -7, 0, 15, 30]; // More useful default differentials
   }
 
   // Generate HTML for each deadline
   let html = "";
   differentials.forEach(diff => {
-    const deadlineDate = new Date(trialDate);
-    let adjustedDate;
+    const startDate = new Date(trialDate); // Start calculation from the trial date
+    let deadlineDate;
     let description;
 
-    if (diff < 0) {
-      // Calculate days before trial (using negative diff)
-      deadlineDate.setDate(deadlineDate.getDate() + diff); // Adding a negative number subtracts
-      adjustedDate = adjustBackwardToCourtDay(deadlineDate);
-      description = `${Math.abs(diff)} days before the selected date:`; // Use absolute value for description
-    } else if (diff > 0) {
-      // Calculate days after trial (using positive diff)
-      deadlineDate.setDate(deadlineDate.getDate() + diff);
-      adjustedDate = adjustForwardToCourtDay(deadlineDate);
-      description = `${diff} days after the selected date:`; // Use positive value for description
+    if (useCourtDays) {
+      // Calculate using court days
+      if (diff === 0) {
+        deadlineDate = adjustForwardToCourtDay(new Date(startDate)); // Adjust start date to a court day if needed
+        description = `Selected date (adjusted to court day):`;
+      } else if (diff > 0) {
+        // Count forward court days
+        deadlineDate = new Date(startDate);
+        let courtDaysCount = 0;
+        while (courtDaysCount < diff) {
+          deadlineDate.setDate(deadlineDate.getDate() + 1); // Move to the next day
+          if (isCourtDay(deadlineDate)) {
+            courtDaysCount++;
+          }
+        }
+        // The loop finishes when courtDaysCount === diff. deadlineDate is the correct date.
+        description = `${diff} court days after the selected date:`;
+      } else { // diff < 0
+        // Count backward court days
+        deadlineDate = new Date(startDate);
+        let courtDaysCount = 0;
+        while (courtDaysCount < Math.abs(diff)) {
+          deadlineDate.setDate(deadlineDate.getDate() - 1); // Move to the previous day
+           if (isCourtDay(deadlineDate)) {
+            courtDaysCount++;
+          }
+        }
+        // The loop finishes when courtDaysCount === Math.abs(diff). deadlineDate is the correct date.
+        description = `${Math.abs(diff)} court days before the selected date:`;
+      }
     } else {
-        // Handle diff === 0 if necessary, or skip
-        return;
+      // Calculate using calendar days (existing logic)
+      deadlineDate = new Date(startDate);
+      deadlineDate.setDate(deadlineDate.getDate() + diff);
+
+      if (diff === 0) {
+         description = `Selected date:`;
+      } else if (diff > 0) {
+        description = `${diff} calendar days after the selected date:`;
+      } else { // diff < 0
+        description = `${Math.abs(diff)} calendar days before the selected date:`;
+      }
+
+      // Adjust the final date if it falls on a weekend or holiday for calendar days
+      if (!isCourtDay(deadlineDate)) {
+          if (diff >= 0) { // If counting forward or 0, adjust forward
+              deadlineDate = adjustForwardToCourtDay(deadlineDate);
+          } else { // If counting backward, adjust backward
+              deadlineDate = adjustBackwardToCourtDay(deadlineDate);
+          }
+      }
     }
 
-
     // Format date as "[weekday], [month] [day], [year]"
-    const formattedDate = adjustedDate.toLocaleDateString("en-US", {
+    const formattedDate = deadlineDate.toLocaleDateString("en-US", {
       weekday: "long",
       month: "long",
       day: "numeric",
