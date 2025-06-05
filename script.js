@@ -22,7 +22,10 @@ const fp = flatpickr("#dateInput", {
 // Utility to check court day
 function isCourtDay(date) {
   const day = date.getDay(); // 0 = Sunday, 6 = Saturday
-  const iso = date.toISOString().split('T')[0];
+  // Use local date string to avoid timezone issues
+  const iso = date.getFullYear() + '-' +
+    String(date.getMonth() + 1).padStart(2, '0') + '-' +
+    String(date.getDate()).padStart(2, '0');
   return day !== 0 && day !== 6 && !holidaySet.has(iso);
 }
 
@@ -52,7 +55,7 @@ function updateDeadlines(trialDate) {
     differentials = customInput.split(',').map(value => parseInt(value.trim())).filter(num => !isNaN(num));
   } else {
     // Default differentials: negative for before, positive for after
-    differentials = [-50, -45, -30, -15, -7, 30]; // Updated default differentials
+    differentials = [0]; // Updated default differentials
   }
 
   // Generate HTML for each deadline
@@ -66,12 +69,12 @@ function updateDeadlines(trialDate) {
       // Calculate days before trial (using negative diff)
       deadlineDate.setDate(deadlineDate.getDate() + diff); // Adding a negative number subtracts
       adjustedDate = adjustBackwardToCourtDay(deadlineDate);
-      description = `${Math.abs(diff)} Days before the date set for trial:`; // Use absolute value for description
+      description = `${Math.abs(diff)} days before the selected date:`; // Use absolute value for description
     } else if (diff > 0) {
       // Calculate days after trial (using positive diff)
       deadlineDate.setDate(deadlineDate.getDate() + diff);
       adjustedDate = adjustForwardToCourtDay(deadlineDate);
-      description = `${diff} Days after the date set for trial:`; // Use positive value for description
+      description = `${diff} days after the selected date:`; // Use positive value for description
     } else {
         // Handle diff === 0 if necessary, or skip
         return;
